@@ -1,9 +1,10 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
+import GithubProvider from "next-auth/providers/github";
 import { db } from "~/server/db";
-
+import type { Adapter } from "next-auth/adapters";
+import { Account, User, Session } from "next-auth";
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -32,11 +33,15 @@ declare module "next-auth" {
  */
 export const authConfig = {
   providers: [
-    DiscordProvider,
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
+    GithubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     })
+    
     /**
      * ...add more providers here.
      *
@@ -47,7 +52,7 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter, 
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -56,5 +61,34 @@ export const authConfig = {
         id: user.id,
       },
     }),
+    
+    async signIn({ user, account }) {
+      if (!user.email) {
+        throw new Error("You must have an email address to sign in");
+      }
+    
+      if (!account) {
+        throw new Error("You must have a valid account to sign in");
+      }
+    
+      // Check if user exists in the database
+      const dbUser = await db.user.findUnique({
+        where: { email: user.email },
+        include: { accounts: true },
+      });
+    
+      if (dbUser) {
+        // Check if user signs in using the same provider
+        const isSameProvider = dbUser.accounts.some(
+          (acc) => acc.provider === account.provider
+        );
+        if (!isSameProvider) {
+          throw new Error("You must sign in with the same provider you used to sign up.");
+        }
+      }
+    
+      return true; // Allow sign-in
+    }
+    
   },
 } satisfies NextAuthConfig;
