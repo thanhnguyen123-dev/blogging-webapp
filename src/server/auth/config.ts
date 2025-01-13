@@ -2,6 +2,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "~/server/db";
 import type { Adapter } from "next-auth/adapters";
 import { Account, User, Session } from "next-auth";
@@ -32,15 +33,42 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authConfig = {
+  debug: true,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    GithubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    })
+    // GithubProvider({
+    //   clientId: process.env.GITHUB_CLIENT_ID,
+    //   clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    // }),
+    CredentialsProvider({
+      name: "sign in",
+      credentials: {
+        email: {
+          label: "Email",
+          type: "email",
+          placeholder: "example@gmail.com",
+        },
+        password: { label: "Password", type: "password" },  
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials.password) {
+          return null;
+        }
+
+        const dbUser = await db.user.findFirst({
+          where: { email: credentials.email },
+        })
+
+        if (dbUser && dbUser.password === credentials.password) {
+          const { password, id, ...dbUserWithoutPassword } = dbUser;
+          return dbUserWithoutPassword as User;
+        }
+        return null;
+      }
+    }),
     
     /**
      * ...add more providers here.
@@ -52,6 +80,11 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  // pages: {
+  //   signIn: "/auth/signin",
+  //   error: "/auth/error",
+  // },
+  secret: process.env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(db) as Adapter, 
   callbacks: {
     session: ({ session, user }) => ({
