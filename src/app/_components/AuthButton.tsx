@@ -1,14 +1,22 @@
-import { signIn } from "next-auth/react";
 import Link from "next/link";
 
-export default function GoogleSignInButton() {
-    const handleClick = async () => {
-        await signIn("google");
-    }
-
+export const CreateAccountButton = () => {
     return (
-        <button onClick={handleClick} className="bg-blue-600 text-white px-4 py-2 rounded-md">
-            Sign in with Google
-        </button>
+        <Link href="/signup">
+            <button className="p-2 bg-transparent text-blue-500 border border-blue-500 rounded-md hover:bg-purple-500 hover:text-white hover:underline">
+                Create account
+            </button>
+        </Link>
+    );
+};
+
+
+export const SignInButton = () => {
+    return (
+        <Link href="/signin">
+            <button className="p-2 text-black rounded-md hover:bg-blue-500 hover:underline">
+                Log in
+            </button>
+        </Link>
     )
 }

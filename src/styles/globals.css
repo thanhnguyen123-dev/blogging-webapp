@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.container {
+  background-color: #f5f5f5;
+}
+
+.cell {
+  border-radius: 0.35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  background-color: white;
+}
+
+/* Left side bar styles */
+
+ul#left-side-bar > * {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.25rem;
+}
+
+
+
+ul#left-side-bar > *:hover {
+  background-color: #b7a7ce;
+  border-radius: 0.35rem;
+}
