@@ -12,7 +12,7 @@ export default function LeftSideBar() {
 
 
     return (
-        <div className="basis-1/6 flex flex-col items-center justify-center h-screen gap-4">
+        <div className="basis-1/6 flex flex-col items-center gap-4">
             {
                 !session && (
                     <div className="cell">

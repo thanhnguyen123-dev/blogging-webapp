@@ -2,7 +2,8 @@
 import React from "react";
 import CredentialsForm from "../_components/CredentialsForm";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
+import { FcGoogle } from "react-icons/fc";
+import { IoLogoGithub } from "react-icons/io";
 
 
 export default function SignInPage() {
@@ -17,9 +18,14 @@ export default function SignInPage() {
 
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-4">
-            <div className="flex flex-col gap-4">
-            <button onClick={handleGoogleAuth} className="flex justify-center items-center w-48 h-12 bg-blue-500 text-white rounded-md">
-                    Continue with Google
+            <div className="flex flex-col gap-4 w-full max-w-md">
+                <button onClick={handleGoogleAuth} className="relative flex justify-center items-center border-gray-200 border-[1px] py-2 px-4 rounded-md">
+                    <FcGoogle className="absolute left-6" />
+                        Continue with Google
+                </button>
+                <button onClick={handleGithubAuth} className="relative flex justify-center items-center border-gray-200 border-[1px] py-2 px-4 rounded-md">
+                    <IoLogoGithub className="absolute left-6" />
+                        Continue with Github
                 </button>
             </div>
             <span>OR</span>
