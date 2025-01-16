@@ -16,7 +16,7 @@ export default function LeftSideBar() {
             {
                 !session && (
                     <div className="cell">
-                        <h2 className="font-bold">DEV Community is a community of 2,688,165 amazing developers</h2>
+                        <h2 className="font-bold text-lg">DEV Community is a community of 2,688,165 amazing developers</h2>
                         <p>We&apos;re a place where coders share, stay up-to-date and grow their careers.</p>
                         <div className="flex flex-col items-center gap-4">
                             <CreateAccountButton/>
@@ -34,7 +34,7 @@ export default function LeftSideBar() {
                 </Link>
                 <Link href="/podcasts">
                     <li>
-                        <FaPodcast />
+                        <FaPodcast color="green" />
                         Podcasts
                     </li>
                 </Link>
@@ -46,7 +46,7 @@ export default function LeftSideBar() {
                 </Link>
                 <Link href="/tags">
                     <li>
-                        <FaTags />
+                        <FaTags color="orange"/>
                         Tags
                     </li>
                 </Link>

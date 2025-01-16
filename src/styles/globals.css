@@ -32,12 +32,13 @@ ul#left-side-bar li {
   display: flex;
   align-items: center;
   gap: 1rem;
+  padding-left: 0.5rem;
 }
 
 
 
 ul#left-side-bar > *:hover {
-  background-color: #b7a7ce;
+  background-color: #d7d0e1;
   border-radius: 0.35rem;
   text-decoration: underline;
 }

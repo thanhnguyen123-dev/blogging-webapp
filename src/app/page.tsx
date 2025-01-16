@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="bg-grey flex flex-col w-full max-w-10xl">
       <NavBar />
-      <div className="flex flex-row px-24 w-full">
+      <div className="flex flex-row px-24 py-4 w-full">
         <LeftSideBar />
         <Feed />
         <RightSideBar />

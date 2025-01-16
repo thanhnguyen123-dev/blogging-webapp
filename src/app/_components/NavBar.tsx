@@ -3,9 +3,13 @@ import { useSession, signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import { CreateAccountButton, SignInButton } from "./AuthButton";
-import { Sign } from "crypto";
+import { FaDev } from "react-icons/fa";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+  const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
+
   const { data: session} = useSession();
   console.log(session);
 
@@ -13,7 +17,7 @@ export default function Navbar() {
     <nav className="flex items-center justify-between w-full px-24 py-2 bg-white border-2 sticky top-0">
       <div className="flex items-center justify-between gap-4">
         <Link href="/">
-          <Image src="/dev.png" alt="This is a Dev logo" width={50} height={50}></Image>
+          <FaDev className="text-5xl" />
         </Link>
         <div className="relative">
           <input 
@@ -28,8 +32,49 @@ export default function Navbar() {
         {
           session ? (
             <div className="flex items-center gap-4">
-              <button>Create post</button>
-              <button className="p-8 rounded border-black" onClick={() => signOut()}>Signout</button>
+              <button className="p-2 bg-transparent text-purple-400 border-2 border-purple-400 rounded-md hover:bg-purple-400 hover:text-white hover:underline transition-colors">
+                Create Post
+              </button>
+              <Image 
+                src={session?.user?.image ?? "/dev.png"}
+                alt="profile-image"
+                width={40}
+                height={40}
+                className="rounded-full cursor-pointer" 
+                onClick={toggleDropDown}/>
+
+              {/** Drop down */}
+              {isDropDownOpen && (
+                <div className="absolute right-24 top-14 w-48 bg-white border-2 rounded-lg shadow-md z-10">
+                  <div className="px-4 py-2">
+                    <p className="font-bold">{session.user?.name}</p>
+                    <p className="text-sm text-gray-500">@{session.user?.email?.split('@')[0]}</p>
+                  </div>
+                  <hr />
+                  <ul className="py-2">
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Dashboard
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Create Post
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Reading List
+                    </li>
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                      Settings
+                    </li>
+                    <hr />
+                    <li 
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
+                      onClick={() => signOut()}
+                    >
+                      Sign Out
+                    </li>
+                  </ul>
+                </div>
+                )
+              }
             </div>
           ) : (
             <>
