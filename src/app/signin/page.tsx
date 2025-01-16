@@ -4,6 +4,7 @@ import CredentialsForm from "../_components/CredentialsForm";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { IoLogoGithub } from "react-icons/io";
+import { OAuthButton } from "../_components/AuthButton";
 
 
 export default function SignInPage() {
@@ -19,8 +20,8 @@ export default function SignInPage() {
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-4">
             <div className="flex flex-col gap-4 w-full max-w-md">
-                <OAuthButton handleClick={handleGoogleAuth} providerName="Google" icon={<FcGoogle className="absolute left-6"/>} />
-                <OAuthButton handleClick={handleGithubAuth} providerName="Github" icon={<IoLogoGithub className="absolute left-6"/>} />
+                <OAuthButton handleClick={handleGoogleAuth} action="Continue with" providerName="Google" icon={<FcGoogle className="absolute left-6"/>} />
+                <OAuthButton handleClick={handleGithubAuth} action="Continue with" providerName="Github" icon={<IoLogoGithub className="absolute left-6"/>} />
             </div>
             <span>OR</span>
             <CredentialsForm />
@@ -28,11 +29,3 @@ export default function SignInPage() {
     )
 }
 
-function OAuthButton({ handleClick, providerName,  icon}: { handleClick: () => void, providerName: string, icon: React.ReactNode }) {
-    return (
-        <button onClick={handleClick} className="relative flex justify-center items-center border-gray-200 border-[1px] py-2 px-4 rounded-md hover:bg-gray-50 transition-colors">
-            {icon}
-            Continue with {providerName}
-        </button>
-    )
-}

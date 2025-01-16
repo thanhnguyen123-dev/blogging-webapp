@@ -17,7 +17,7 @@ const RightSideBar = () => {
                 {
                     challenges.map(({status, imageSrc, alt, width, height, title, description}, index) => {
                         return (
-                            <div key={index} className="flex flex-col gap-2 mx-auto my-2 px-4 border-black border-2 rounded-md">
+                            <div key={index} className="flex flex-col gap-2 mx-auto my-2 px-4 py-2 border-black border-2 rounded-md">
                                 <p>{status}</p>
                                 <Image
                                     src={imageSrc}
@@ -27,7 +27,7 @@ const RightSideBar = () => {
                                     className='flex rounded-md'
                                 />
                                 <p className='underline'>{title}</p>
-                                <p>{description}</p>
+                                <p className='italic'>{description}</p>
                             </div>
                         );
                     })

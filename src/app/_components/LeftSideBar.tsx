@@ -32,31 +32,31 @@ export default function LeftSideBar() {
                         Home
                     </li>
                 </Link>
-                <Link href="/podcasts">
+                <Link href="/">
                     <li>
                         <FaPodcast color="green" />
                         Podcasts
                     </li>
                 </Link>
-                <Link href="/videos">
+                <Link href="/">
                     <li>
                         <FaVideo />
                         Videos
                     </li>
                 </Link>
-                <Link href="/tags">
+                <Link href="/">
                     <li>
                         <FaTags color="orange"/>
                         Tags
                     </li>
                 </Link>
-                <Link href="/about">
+                <Link href="/">
                     <li>
                         <FcAbout />
                         About
                     </li>
                 </Link>
-                <Link href="/contact">
+                <Link href="/">
                     <li>
                         <FcContacts />
                         Contact

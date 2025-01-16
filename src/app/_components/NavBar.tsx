@@ -5,10 +5,13 @@ import Image from "next/image";
 import { CreateAccountButton, SignInButton } from "./AuthButton";
 import { FaDev } from "react-icons/fa";
 import { useState } from "react";
+import {useRouter} from "next/navigation";
 
 export default function Navbar() {
   const [isDropDownOpen, setIsDropDownOpen] = useState(false);
   const toggleDropDown = () => setIsDropDownOpen(!isDropDownOpen);
+
+  const router = useRouter();
 
   const { data: session} = useSession();
   console.log(session);
@@ -32,7 +35,9 @@ export default function Navbar() {
         {
           session ? (
             <div className="flex items-center gap-4">
-              <button className="p-2 bg-transparent text-purple-400 border-2 border-purple-400 rounded-md hover:bg-purple-400 hover:text-white hover:underline transition-colors">
+              <button className="p-2 bg-transparent text-purple-400 border-2 border-purple-400 rounded-md hover:bg-purple-400 
+              hover:text-white hover:underline transition-colors"
+              onClick={() => router.push('/new_post')}>
                 Create Post
               </button>
               <Image 
@@ -55,7 +60,8 @@ export default function Navbar() {
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                       Dashboard
                     </li>
-                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    onClick={() => router.push('/new_post')}>
                       Create Post
                     </li>
                     <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
@@ -67,7 +73,7 @@ export default function Navbar() {
                     <hr />
                     <li 
                       className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-red-500"
-                      onClick={() => signOut()}
+                      onClick={() => router.push('/signout_confirm')}
                     >
                       Sign Out
                     </li>

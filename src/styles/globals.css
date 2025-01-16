@@ -2,8 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
+.custom-placeholder::placeholder {
+  @apply text-3xl font-bold; /* Adjust font size and weight */
+}
 
 .bg-grey {
   background-color: #f5f5f5;
@@ -33,6 +34,7 @@ ul#left-side-bar li {
   align-items: center;
   gap: 1rem;
   padding-left: 0.5rem;
+  font-weight: bold;
 }
 
 
