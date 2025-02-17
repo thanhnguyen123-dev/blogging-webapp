@@ -37,8 +37,6 @@ ul#left-side-bar li {
   font-weight: bold;
 }
 
-
-
 ul#left-side-bar > *:hover {
   background-color: #d7d0e1;
   border-radius: 0.35rem;

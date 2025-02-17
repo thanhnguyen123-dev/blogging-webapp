@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable} h-full`}>
       <body className="w-full min-h-screen">
-          <SessionWrapperProvider>{children}</SessionWrapperProvider>
+        <SessionWrapperProvider>{children}</SessionWrapperProvider>
       </body>
     </html>
   );

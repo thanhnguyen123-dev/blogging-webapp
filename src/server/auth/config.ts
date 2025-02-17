@@ -8,7 +8,6 @@ import { db } from "~/server/db";
 import type { Adapter } from "next-auth/adapters";
 import { env } from "~/env";
 
-
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
  * object and keep type safety.
@@ -68,7 +67,6 @@ export const authConfig: NextAuthOptions = {
 
     async redirect() {
       return "/";
-    }
+    },
   },
 } satisfies NextAuthOptions;
-
